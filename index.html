@@ -1,0 +1,92 @@
+<!doctype html>
+<html ng-app="testApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Test</title>
+
+    <link rel="stylesheet" href="./css/compiled.min.css">
+
+</head>
+<body>
+    <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
+            href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Test</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" ng-controller="mainCtrl">
+
+        <h3 class="pull-right">Average: {{ gpaAverage }}</h3>
+
+        <ul class="nav nav-tabs">
+            <li ng-class="activeTab == key ? 'active' : ''" ng-repeat="(key, item) in data">
+                <a ng-click="changeActive(key)">
+                    {{ item.name }} <i class="fa fa-times remove-icon" ng-click="removeGrade(key)"></i>
+                </a>
+            </li>
+            <li>
+                <i class="fa fa-plus-square fa-2x add-icon" ng-click="addGrade()"></i>
+            </li>
+        </ul>
+
+        <div ng-if="data.length">
+            <section>
+                <div class="margin-top-10">
+                    <label for="grade-name">Grade Name:</label>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="grade-name" ng-model="data[activeTab].name">
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        GPA
+                    </th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="(key, item) in data[activeTab].students">
+                        <td>
+                            {{ item.name }}
+                        </td>
+                        <td>
+                            {{ item.gpa }}
+                            <i class="fa fa-times remove-icon pull-right" ng-click="removeStudent(key)"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <form class="form-inline" role="form" ng-submit="addStudent()">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" ng-model="$parent.newName">
+                    </div>
+                    <div class="form-group">
+                        <label for="gpa">Gpa:</label>
+                        <input type="text" class="form-control" id="gpa" ng-model="$parent.newGpa">
+                    </div>
+                    <button class="btn btn-success" type="submit">Add</button>
+                </form>
+            </section>
+        </div>
+
+    </div>
+
+    <script src="./js/compiled.min.js"></script>
+</body>
+</html>

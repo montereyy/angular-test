@@ -1,0 +1,16 @@
+body {
+    padding-top: 100px;
+}
+
+.add-icon {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.nav li a:hover, .remove-icon, .add-icon {
+    cursor: pointer;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
