@@ -1,0 +1,47 @@
+<div class="container" id="wrapper" ng-init="newDomino()">
+
+    <h3>Domino</h3>
+
+    <a class="ng-link" ng-click="rotate(-90)">
+        <i class="fa fa-undo"></i>
+    </a><!--ng-link-->
+
+    <a class="ng-link" ng-click="newDomino()">
+        New
+    </a><!--ng-link-->
+
+    <a class="ng-link" ng-click="rotate(90)">
+        <i class="fa fa-repeat"></i>
+    </a><!--ng-link-->
+
+    <div class="domino-container">
+        <div class="domino-tile" ng-style="{ transform: 'rotate(' + domino.currentDegree + 'deg) scale(' + domino.size / 100+ ')',
+transitionDuration: ( 100 / (domino.rotationSpeed ? domino.rotationSpeed : 1)).toFixed(1) +'s'}">
+
+            <div class="domino-half">
+                <div ng-repeat="dotClass in dots[domino.half1]" class="dot {{ dotClass }}"></div>
+            </div>
+            <!--domino-half-->
+
+            <div class="domino-half">
+                <div ng-repeat="dotClass in dots[domino.half2]" class="dot {{ dotClass }}"></div>
+            </div>
+            <!--domino-half-->
+
+        </div>
+        <!--domino-tile-->
+    </div>
+        <!--domino-container-->
+
+    <div class="controls-container">
+
+        <div ovts-slider='' model='domino.size'
+             ovts-slider-options='{max: "200", step: "1", label: "Size", valueSuffix: "%"}'></div>
+
+        <div ovts-slider='' model='domino.rotationSpeed'
+             ovts-slider-options='{max: 200, step:1, label: "Speed", valueSuffix: "%"}'></div>
+
+    </div>
+        <!--controls-container-->
+
+</div><!--wrapper-->

@@ -15,7 +15,7 @@ testApp.controller( 'mainCtrl', [ '$scope', '$log', 'dataProvider', function ( $
      *
      * @type {Array}
      */
-    $scope.data = dataProvider.data;
+    $scope.data = dataProvider.dataTabs;
 
     countAverage();
 
@@ -37,7 +37,7 @@ testApp.controller( 'mainCtrl', [ '$scope', '$log', 'dataProvider', function ( $
 
         $scope.data[ $scope.activeTab ].students.push( {
             name: $scope.newName,
-            gpa: isNaN(parseInt( $scope.newGpa )) ? 0 : parseInt( $scope.newGpa )
+            gpa: isNaN( parseInt( $scope.newGpa ) ) ? 0 : parseInt( $scope.newGpa )
         } );
 
         $scope.newName = $scope.newGpa = '';
@@ -89,6 +89,7 @@ testApp.controller( 'mainCtrl', [ '$scope', '$log', 'dataProvider', function ( $
      * Changing active tab to available
      */
     function changeActiveTabRemove() {
+
         $scope.activeTab -= 1;
         if ( typeof $scope.data[ $scope.activeTab ] === 'undefined' ) {
 
@@ -119,7 +120,7 @@ testApp.controller( 'mainCtrl', [ '$scope', '$log', 'dataProvider', function ( $
                     $log.debug( student.gpa );
                 } );
 
-                $scope.gpaAverage = (sum / $scope.data[ $scope.activeTab ].students.length).toFixed(2);
+                $scope.gpaAverage = (sum / $scope.data[ $scope.activeTab ].students.length).toFixed( 2 );
             }
             else {
 
@@ -128,4 +129,45 @@ testApp.controller( 'mainCtrl', [ '$scope', '$log', 'dataProvider', function ( $
         }
     }
 
+} ] );
+
+testApp.controller( 'dominoCtrl', [ '$scope', '$log', 'dataProvider', function ( $scope, $log, dataProvider ) {
+
+    /**
+     * Get the dots data for dominos
+     *
+     * @type {{1: string[], 2: string[], 3: string[], 4: string[], 5: string[], 6: string[]}}
+     */
+    $scope.dots = dataProvider.dataDomino;
+
+    /**
+     * Initialize domino object
+     *
+     * @type {{}}
+     */
+    $scope.domino = {};
+
+    /**
+     * Rotate domino
+     *
+     * @param deg
+     */
+    $scope.rotate = function ( deg ) {
+
+        $scope.domino.currentDegree += deg;
+    };
+
+    /**
+     * Set new domino randomly
+     */
+    $scope.newDomino = function () {
+
+        $scope.domino = {
+            half1: $scope.half1 = (parseInt( Math.random() * 6 ) % 6) + 1,
+            half2: $scope.half2 = (parseInt( Math.random() * 6 ) % 6) + 1,
+            currentDegree: 0,
+            rotationSpeed: 100,
+            size: 100
+        };
+    };
 } ] );

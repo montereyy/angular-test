@@ -1,5 +1,12 @@
 body {
     padding-top: 100px;
+    font-family: Arial, Helvetica, Verdana;
+    color: #555;
+}
+
+a {
+    padding: 2px 10px;
+    font-family: Arial, Helvetica, Verdana;
 }
 
 .add-icon {
@@ -7,10 +14,96 @@ body {
     margin-left: 5px;
 }
 
-.nav li a:hover, .remove-icon, .add-icon {
+.nav li a:hover, .remove-icon, .add-icon, .ng-link {
     cursor: pointer;
 }
 
 .margin-top-10 {
     margin-top: 10px;
+}
+
+.margin-bottom-10 {
+    margin-top: 10px;
+}
+
+.margin-top-bottom-10 {
+    margin: 10px 0;
+}
+
+.margin-left-right-10 {
+    margin: 0 10px;
+}
+
+#wrapper {
+    margin: 0 auto;
+    text-align: center;
+    width: 450px;
+    border: 2px solid #EEE;
+    border-radius: 10px;
+    padding-bottom: 20px;
+}
+
+.domino-tile {
+    transition: all 0.5s;
+    width: 100px;
+    height: 200px;
+    margin: 0 auto;
+    border: 2px solid #999;
+    border-radius: 8px;
+    box-shadow: 0 0 20px #E2E2E2;
+}
+
+.domino-container {
+    padding-top: 110px;
+    height: 420px;
+}
+
+.controls-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.domino-half {
+    width: 100%;
+    height: 50%;
+    position: relative;
+}
+
+.domino-half:first-child {
+    box-sizing: border-box;
+    border-bottom: 2px solid #CCC;
+}
+
+.dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    background: black;
+    position: absolute;
+    box-shadow: 0 0 0.5px black;
+}
+
+.center {
+    top: calc(50% - 5px);
+    left: calc(50% - 8px);
+}
+
+.top {
+    top: 20%;
+}
+
+.middle {
+    top: 45%;
+}
+
+.bottom {
+    top: 68%;
+}
+
+.left {
+    left: 20%;
+}
+
+.right {
+    right: 20%;
 }

@@ -1,0 +1,83 @@
+<div class="container">
+
+    <h3 class="pull-right">Average: {{ gpaAverage }}</h3>
+
+    <ul class="nav nav-tabs">
+        <li ng-class="activeTab == key ? 'active' : ''" ng-repeat="(key, item) in data">
+            <a ng-click="changeActive(key)">
+                Grade {{ item.name }} <i class="fa fa-times remove-icon" ng-click="removeGrade(key)"></i>
+            </a>
+        </li>
+        <li>
+            <i class="fa fa-plus-square fa-2x add-icon" ng-click="addGrade()"></i>
+        </li>
+    </ul>
+    <!--nav-->
+
+    <div ng-if="data.length">
+        <section>
+            <div class="margin-top-bottom-10">
+                <form class="form-inline">
+                    <label for="grade-name">Grade:</label>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="grade-name" ng-model="data[activeTab].name">
+                    </div>
+                </form>
+            </div>
+
+            <table class="table table-bordered table-responsive">
+
+                <thead>
+                <th>
+                    Name
+                </th>
+                <th>
+                    GPA
+                </th>
+                </thead>
+                <!--thead-->
+
+                <tbody>
+                <tr ng-repeat="(key, item) in data[activeTab].students">
+                    <td>
+                        {{ item.name }}
+                    </td>
+                    <td>
+                        {{ item.gpa }}
+                        <i class="fa fa-times remove-icon pull-right" ng-click="removeStudent(key)"></i>
+                    </td>
+                </tr>
+                </tbody>
+                <!--tbody-->
+
+            </table>
+            <!--table-->
+        </section>
+        <!--section-->
+
+        <section>
+            <form class="form-inline" role="form" ng-submit="addStudent()">
+
+                <div class="form-group">
+                    <label for="name">Student Name:</label>
+                    <input type="text" class="form-control" id="name" ng-model="$parent.newName">
+                </div>
+                <!--form-group-->
+
+                <div class="form-group">
+                    <label for="gpa">Gpa:</label>
+                    <input type="text" class="form-control" id="gpa" ng-model="$parent.newGpa">
+                </div>
+                <!--form-group-->
+
+                <button class="btn btn-success" type="submit">Add</button>
+
+            </form>
+            <!--form-->
+        </section>
+        <!--section-->
+    </div>
+    <!--ng-if-->
+
+</div><!--container-->
