@@ -403,6 +403,25 @@ testApp.service( 'dataProvider', function () {
         5: [ 'top right', 'top left', 'bottom left', 'bottom right', 'center' ],
         6: [ 'top right', 'top left', 'bottom left', 'bottom right', 'middle right', 'middle left' ]
     };
+
+    /**
+     * The average gpa number for transferring between controllers
+     *
+     * @type {number}
+     */
+    this.gpaAverage = 0;
+
+    /**
+     * Default domino sizes
+     *
+     * @type {{}}
+     */
+    this.defaultDominoSize = {
+        height: 200,
+        width: 100,
+        dotHeight: 15,
+        containerHeight: 420
+    };
 } );
 /**
  * Describing main controller
@@ -535,9 +554,17 @@ testApp.controller( 'mainCtrl', [ '$scope', '$log', 'dataProvider', function ( $
         }
     }
 
+    /**
+     * Bind our scope data with service
+     */
+    $scope.$watch( 'gpaAverage', function ( newValue, oldValue ) {
+
+        dataProvider.gpaAverage = newValue;
+    } );
+
 } ] );
 
-testApp.controller( 'dominoCtrl', [ '$scope', '$log', 'dataProvider', function ( $scope, $log, dataProvider ) {
+testApp.controller( 'dominoCtrl', [ '$scope', '$log', '$timeout', 'dataProvider', function ( $scope, $log, $timeout, dataProvider ) {
 
     /**
      * Get the dots data for dominos
@@ -547,6 +574,13 @@ testApp.controller( 'dominoCtrl', [ '$scope', '$log', 'dataProvider', function (
     $scope.dots = dataProvider.dataDomino;
 
     /**
+     * Average gpa from mainCtrl
+     *
+     * @type {*|number}
+     */
+    $scope.gpaAverage = dataProvider.gpaAverage;
+
+    /**
      * Initialize domino object
      *
      * @type {{}}
@@ -554,13 +588,27 @@ testApp.controller( 'dominoCtrl', [ '$scope', '$log', 'dataProvider', function (
     $scope.domino = {};
 
     /**
-     * Rotate domino
+     * Initialize in progress flag, needed for hidding elements during existing rotation
+     *
+     * @type {boolean}
+     */
+    $scope.inProgress = false;
+
+    /**
+     * Rotate domino, updated to prevent controlls for rotating again from showing
      *
      * @param deg
      */
     $scope.rotate = function ( deg ) {
 
+        $scope.inProgress = true;
+
         $scope.domino.currentDegree += deg;
+
+        $timeout( function () {
+
+            $scope.inProgress = false;
+        }, $scope.domino.durationTransition * 1000 );
     };
 
     /**
@@ -573,7 +621,46 @@ testApp.controller( 'dominoCtrl', [ '$scope', '$log', 'dataProvider', function (
             half2: $scope.half2 = (parseInt( Math.random() * 6 ) % 6) + 1,
             currentDegree: 0,
             rotationSpeed: 100,
-            size: 100
+            size: 100,
+            durationTransition: 1,
+            height: dataProvider.defaultDominoSize.height,
+            width: dataProvider.defaultDominoSize.width,
+            dotHeight: dataProvider.defaultDominoSize.dotHeight,
+            containerHeight: dataProvider.defaultDominoSize.containerHeight
         };
     };
+
+    /**
+     * Add watcher for domino.rotationSpeed
+     */
+    $scope.$watch( 'domino.rotationSpeed', function ( newValue, oldValue ) {
+
+        if ( newValue !== oldValue ) {
+
+            calculateRotationSpeed( newValue );
+        }
+    } );
+
+    /**
+     * Add watcher for domino.size
+     */
+    $scope.$watch( 'domino.size', function ( newValue, oldValue ) {
+
+        if ( newValue !== oldValue ) {
+
+            $scope.domino.height = (dataProvider.defaultDominoSize.height / (100 / newValue)).toFixed( 1 );
+            $scope.domino.width = (dataProvider.defaultDominoSize.width / (100 / newValue)).toFixed( 1 );
+            $scope.domino.dotHeight = (dataProvider.defaultDominoSize.dotHeight / (100 / newValue)).toFixed( 1 );
+            $scope.domino.containerHeight = (dataProvider.defaultDominoSize.containerHeight + $scope.domino.height / 2).toFixed( 1 );
+        }
+    } );
+
+    /**
+     * Calculate transition duration based on the rotationSpeed
+     */
+    function calculateRotationSpeed( newValue ) {
+
+        $scope.domino.durationTransition = ( 100 / (newValue ? newValue : 1)).toFixed( 1 );
+    }
+
 } ] );

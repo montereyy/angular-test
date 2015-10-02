@@ -55,4 +55,23 @@ testApp.service( 'dataProvider', function () {
         5: [ 'top right', 'top left', 'bottom left', 'bottom right', 'center' ],
         6: [ 'top right', 'top left', 'bottom left', 'bottom right', 'middle right', 'middle left' ]
     };
+
+    /**
+     * The average gpa number for transferring between controllers
+     *
+     * @type {number}
+     */
+    this.gpaAverage = 0;
+
+    /**
+     * Default domino sizes
+     *
+     * @type {{}}
+     */
+    this.defaultDominoSize = {
+        height: 200,
+        width: 100,
+        dotHeight: 15,
+        containerHeight: 420
+    };
 } );

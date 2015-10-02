@@ -2,38 +2,43 @@
 
     <h3>Domino</h3>
 
-    <a class="ng-link" ng-click="rotate(-90)">
-        <i class="fa fa-undo"></i>
-    </a><!--ng-link-->
+    <div ng-class="(inProgress) ? 'element-hidden' : ''">
+        <a class="ng-link" ng-click="rotate(-90)">
+            <i class="fa fa-undo"></i>
+        </a><!--ng-link-->
 
-    <a class="ng-link" ng-click="newDomino()">
-        New
-    </a><!--ng-link-->
+        <a class="ng-link" ng-click="newDomino()">
+            New
+        </a><!--ng-link-->
 
-    <a class="ng-link" ng-click="rotate(90)">
-        <i class="fa fa-repeat"></i>
-    </a><!--ng-link-->
+        <a class="ng-link" ng-click="rotate(90)">
+            <i class="fa fa-repeat"></i>
+        </a><!--ng-link-->
+    </div>
 
-    <div class="domino-container">
-        <div class="domino-tile" ng-style="{ transform: 'rotate(' + domino.currentDegree + 'deg) scale(' + domino.size / 100+ ')',
-transitionDuration: ( 100 / (domino.rotationSpeed ? domino.rotationSpeed : 1)).toFixed(1) +'s'}">
+    <div class="domino-container" ng-style="{ height: domino.containerHeight + 'px', transitionDuration: domino.durationTransition +'s' }">
+        <div class="domino-tile"
+             ng-style="{ transform: 'rotate(' + domino.currentDegree + 'deg)', transitionDuration: domino.durationTransition +'s',
+              width: domino.width + 'px', height: domino.height + 'px', marginLeft: - (domino.width / 2) + 'px', marginTop: - (domino.height / 2) + 'px' }">
 
             <div class="domino-half">
-                <div ng-repeat="dotClass in dots[domino.half1]" class="dot {{ dotClass }}"></div>
+                <div ng-repeat="dotClass in dots[domino.half1]" class="dot {{ dotClass }}"
+                     ng-style="{ height: domino.dotHeight, width: domino.dotHeight }"></div>
             </div>
             <!--domino-half-->
 
             <div class="domino-half">
-                <div ng-repeat="dotClass in dots[domino.half2]" class="dot {{ dotClass }}"></div>
+                <div ng-repeat="dotClass in dots[domino.half2]" class="dot {{ dotClass }}"
+                     ng-style="{ height: domino.dotHeight, width: domino.dotHeight }"></div>
             </div>
             <!--domino-half-->
 
         </div>
         <!--domino-tile-->
     </div>
-        <!--domino-container-->
+    <!--domino-container-->
 
-    <div class="controls-container">
+    <div class="controls-container" ng-class="(inProgress) ? 'element-hidden' : ''">
 
         <div ovts-slider='' model='domino.size'
              ovts-slider-options='{max: "200", step: "1", label: "Size", valueSuffix: "%"}'></div>
@@ -42,6 +47,8 @@ transitionDuration: ( 100 / (domino.rotationSpeed ? domino.rotationSpeed : 1)).t
              ovts-slider-options='{max: 200, step:1, label: "Speed", valueSuffix: "%"}'></div>
 
     </div>
-        <!--controls-container-->
+    <!--controls-container-->
 
 </div><!--wrapper-->
+
+<h1>GPA from mainCtrl: {{ gpaAverage }}</h1>
